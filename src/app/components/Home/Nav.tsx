@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Nav = () => {
   return (
-    <div className=" sticky top-0 h-[13vh] overflow-hidden shadow-md bg-white">
+    <div className=" sticky z-50 top-0 h-[13vh] overflow-hidden shadow-md bg-white">
       <div className="w-[90%] md:w-[80%] h-full mx-auto flex justify-between items-center">
         {/* Logo */}
         <div className="w-[150px] h-[150px] md:w-[250px] md:h-[250px] flex items-center">
@@ -36,9 +36,10 @@ const Nav = () => {
           </ul>
 
           <Link href="/signup">
-            <button className="px-4 py-1.5 text-sm sm:text-base sm:px-6 sm:py-2 bg-blue-600 font-semibold text-white rounded-lg hover:bg-blue-800 transition-all duration-300">
+            <button className="px-4 py-1.5 text-sm sm:text-base sm:px-6 sm:py-2 bg-blue-600 font-semibold text-white rounded-lg hover:bg-blue-800 transition-all duration-300 ">
               Sign up
             </button>
+            <button type="button" className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-7 py-2.5 text-center me-2 mb-2  dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800" >Login</button>
           </Link>
         </div>
       </div>
