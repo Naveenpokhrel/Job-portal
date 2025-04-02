@@ -1,29 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import useLogIn from "@/app/Hooks/isLoggedIn";
+import useInitialName from "@/app/Hooks/initialName";
+import { useRouter } from "next/navigation";
+import { Menu, X } from "lucide-react";
+
+const NavItems = ["Home", "About", "Contact", "Jobs"];
 
 const Nav = () => {
+  const { initialName } = useInitialName();
+  const { LoggedIn } = useLogIn();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const router = useRouter();
+
+  function handleLogoutButton() {
+    setIsDropdownOpen(false);
+    router.push("/");
+    location.reload();
+  }
+
   return (
-    <div className=" sticky z-50 top-0 h-[13vh] overflow-hidden shadow-md bg-white">
-      <div className="w-[90%] md:w-[80%] h-full mx-auto flex justify-between items-center">
+    <div className="sticky top-0 z-50 bg-white shadow-md">
+      <div className="w-[90%] md:w-[80%] h-[13vh] mx-auto flex justify-between items-center">
         {/* Logo */}
-        <div className="w-[150px] h-[150px] md:w-[250px] md:h-[250px] flex items-center">
+        <div className="w-[150px] h-auto flex items-center">
           <Link href="/">
             <Image
               src="/Image/logo.png"
               alt="Logo"
-              width={250}
-              height={250}
+              width={150}
+              height={150}
               className="w-full h-auto"
               priority
             />
           </Link>
         </div>
 
-        {/* Navigation Links & Sign-up Button */}
-        <div className="flex items-center space-x-8">
-          <ul className="flex items-center space-x-6">
-            {["Home", "About", "Contact"].map((item) => (
+        {/* Mobile Menu Toggle */}
+        <button
+          className="md:hidden"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+
+        {/* Navigation Links & User Auth Section */}
+        <div
+          className={`flex-1 md:flex justify-end items-center space-x-8 ${
+            isMobileMenuOpen ? "block" : "hidden md:flex"
+          }`}
+        >
+          <ul className="flex flex-col md:flex-row md:space-x-6 text-center md:text-left">
+            {NavItems.map((item) => (
               <li key={item}>
                 <Link
                   href={`/${item.toLowerCase()}`}
@@ -35,12 +65,45 @@ const Nav = () => {
             ))}
           </ul>
 
-          <Link href="/signup">
-            <button className="px-4 py-1.5 text-sm sm:text-base sm:px-6 sm:py-2 bg-blue-600 font-semibold text-white rounded-lg hover:bg-blue-800 transition-all duration-300 ">
-              Sign up
-            </button>
-            <button type="button" className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-7 py-2.5 text-center me-2 mb-2  dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800" >Login</button>
-          </Link>
+          {/* Authentication Section */}
+          <div className="relative">
+            {LoggedIn ? (
+              <div className="relative">
+                <div
+                  className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                >
+                  <span className="text-white font-semibold text-lg tracking-wide">
+                    {initialName}
+                  </span>
+                </div>
+                {isDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg overflow-hidden z-50">
+                    <ul className="text-gray-800">
+                      <li
+                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer transition"
+                        onClick={() => alert("View Profile Clicked")}
+                      >
+                        View Profile
+                      </li>
+                      <li
+                        className="px-4 py-2 hover:bg-red-500 hover:text-white cursor-pointer transition"
+                        onClick={handleLogoutButton}
+                      >
+                        Log Out
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link href="/signup">
+                <button className="px-4 py-2 bg-blue-600 font-semibold text-white rounded-lg hover:bg-blue-800 transition-all duration-300">
+                  Login
+                </button>
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </div>

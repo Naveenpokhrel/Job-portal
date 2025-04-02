@@ -4,7 +4,9 @@ import Categories from "./Categories";
 import Features from "./features";
 import Center from "./center";
 import Footer from "./footer";
-const Home = () => {
+import JobData from "../../jobdata/page";
+
+export  function Home() {
   return (
     <div>
       <Hero />
@@ -14,6 +16,4 @@ const Home = () => {
       <Footer />
     </div>
   );
-};
-
-export default Home;
+}

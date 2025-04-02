@@ -1,5 +1,6 @@
+"use client";
 import React from "react";
-import SignUp from "../components/Auth/SignUp";
+import SignUp from "../Auth/Login";
 const SignUpPage = () => {
   return (
     <div>

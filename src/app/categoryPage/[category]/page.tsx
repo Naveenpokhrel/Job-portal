@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import React from "react";
-import {motion} from "framer-motion"
+import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import { CiLocationOn, CiClock1 } from "react-icons/ci";
 import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
@@ -15,7 +14,6 @@ const detailsForPage = [
       "Stay on top of your business finances with accurate accounting solutions. Track expenses, generate reports, and ensure compliance effortlessly.",
     image:
       "https://img.freepik.com/free-vector/accounting-concept-illustration_114360-3584.jpg",
-    summary: "hello",
     dates: "10 Jan, 2024",
     vacancy: "3 Positions",
     salary: "40k - 80k/y",
@@ -29,7 +27,6 @@ const detailsForPage = [
       "Enhance your business outreach with effective marketing strategies. Utilize SEO, social media, and branding to maximize customer engagement.",
     image:
       "https://img.freepik.com/free-vector/digital-marketing_52683-10094.jpg",
-    summary: "hello",
     dates: "15 Feb, 2024",
     vacancy: "5 Positions",
     salary: "35k - 75k/y",
@@ -150,59 +147,31 @@ const detailsForPage = [
   },
 ];
 
-export default function CategoryPage({
-  params,
-}: {
-  params: { category: React.ReactNode };
-}) {
-  const category = params.category;
+export default function CategoryPage() {
+  const { category } = useParams();
   const [index, setIndex] = useState(0);
-  let detailToShow;
+  const [popupForm, setPopupForm] = useState(false);
+  const [displayNotification, setDisplayNotification] = useState("none");
 
-  let filteredObject = detailsForPage.filter(
-    (det) => category === det.title.trim()
+  const filteredObject = detailsForPage.find(
+    (detail) => detail.title.replace(/\s/g, "") === category
   );
 
   useEffect(() => {
-    console.log("FilterdredV1 ", filteredObject);
-    if (filteredObject.length) {
-      setIndex(filteredObject[0].id - 1);
+    if (filteredObject) {
+      setIndex(filteredObject.id - 1);
     }
-  }, []);
+  }, [category]);
 
-  const [displayNotification, setDisplayNotification] = useState("none");
-const [popupForm,setPopupForm] = useState(false)
-
-  function handleClickNotification(){
-      if(!popupForm){
-        setDisplayNotification("flex")
-        setPopupForm(true)
-      }else{
-        setPopupForm(false)
-      
-        setDisplayNotification("none")
-      
-      }
-  detailToShow = detailsForPage[index];
-
-  console.log("index ", detailToShow);
-
-  // if (params.category === "Accounting") {
-  //   detailToShow = detailsForPage[0];
-  // } else if (params.category === "Marketing") {
-  //   detailToShow = detailsForPage[1];
-  // } else if (params.category === "SoftwareDevelopment") {
-  //   detailToShow = detailsForPage[2];
-  // } else if (params.category === "HumanResources") {
-  //   detailToShow = detailsForPage[3];
-  // } else if (params.category === "GraphicDesign") {
-  //   detailToShow = detailsForPage[4];
-  // } else if (params.category === "SoftwareDevelopment") {
-  //   detailToShow = detailsForPage[5];
-  // } else detailToShow = detailsForPage[6];
-  function handleUpdateCVCategory() {
-    alert("Updated");
+  if (!filteredObject) {
+    return <div className="text-center text-2xl py-10">Job Not Found</div>;
   }
+
+  // function handleClickNotification() {
+  //   setPopupForm(!popupForm);
+  //   setDisplayNotification(popupForm ? "none" : "flex");
+  // }
+
   return (
     <>
       <div className="bg-[#F5F7FA] relative flex flex-col justify-center items-center ">
@@ -211,10 +180,10 @@ const [popupForm,setPopupForm] = useState(false)
             <div className="w-[45vw] flex h-[6vw] bg-[white] ">
               <div
                 className="h-[6vw] w-[6vw] bg-no-repeat bg-contain"
-                style={{ backgroundImage: `url(${detailToShow.image})` }}
+                style={{ backgroundImage: `url(${filteredObject.image})` }}
               ></div>
               <div className="h-[2vw] w-[20vw] text-[1.4vw]  text-center font-semibold pt-9">
-                <div>{detailToShow.title}</div>
+                <div>{filteredObject.title}</div>
 
                 <div className="font-light text-[1vw]  flex  items-center ">
                   <div className="ml-[2vw] flex justify-center gap-[.1vw] items-center h-[2vw] w-[10vw]">
@@ -239,7 +208,7 @@ const [popupForm,setPopupForm] = useState(false)
             </div>
 
             <div className="min-h-[14vw] text-blue text-[1.2vw] opacity-70  p-5">
-              {detailToShow.description}
+              {filteredObject.description}
             </div>
             <div className="">
               <div>
@@ -291,35 +260,35 @@ const [popupForm,setPopupForm] = useState(false)
                     📅 Published on:
                   </span>
                   <span className="text-left w-[10vw] ml-[1.1vw]">
-                    {detailToShow.dates}
+                    {filteredObject.dates}
                   </span>
                 </div>
 
                 <div className="flex justify-between">
                   <span className="font-semibold w-[10vw]">👥 Vacancy:</span>
                   <span className="text-left w-[10vw] ml-[1.1vw]">
-                    {detailToShow.vacancy}
+                    {filteredObject.vacancy}
                   </span>
                 </div>
 
                 <div className="flex justify-between">
                   <span className="font-semibold w-[10vw]">💰 Salary:</span>
                   <span className="text-left w-[10vw] ml-[1.1vw]">
-                    {detailToShow.salary}
+                    {filteredObject.salary}
                   </span>
                 </div>
 
                 <div className="flex justify-between">
                   <span className="font-semibold w-[10vw]">📍 Location:</span>
                   <span className="text-left w-[10vw] ml-[1.1vw]">
-                    {detailToShow.locations}
+                    {filteredObject.locations}
                   </span>
                 </div>
 
                 <div className="flex justify-between">
                   <span className="font-semibold w-[10vw]">📝 Job Nature:</span>
                   <span className="text-left w-[10vw] ml-[1.1vw]">
-                    {detailToShow.nature}
+                    {filteredObject.nature}
                   </span>
                 </div>
               </div>
@@ -337,62 +306,9 @@ const [popupForm,setPopupForm] = useState(false)
             </div>
           </div>
         </div>
-        
       </div>
+
       <Footer />
     </>
   );
 }
-
-}
-
-
-// <div className="h-[100vh] w-[100vw]" >
-//   <div className="w-[770px] absolute h-[660px] left-[13vw] bottom-[6vw] bg-white rounded-lg  p-6 flex-col flex">
-//     <h1 className="text-3xl font-semibold text-center mb-6">
-//       Apply for the Job
-//     </h1>
-//     <div className="flex justify-center items-center">
-//       <form className="space-y-4 w-full max-w-[648px]">
-//         <input
-//           type="text"
-//           className="border-2 w-full h-[58px] px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-//           placeholder="Enter Your Full Name"
-//         />
-//         <input
-//           type="text"
-//           className="border-2 w-full h-[58px] px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-//           placeholder="Enter Your Email"
-//         />
-//         <input
-//           type="text"
-//           className="border-2 w-full h-[58px] px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-//           placeholder="Enter Your Website Link"
-//         />
-//         <input
-//           type="file"
-//           name="resume"
-//           accept=".pdf,.doc,.docx"
-//           required
-//           className="border-2 w-full h-[58px] px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 pt-4"
-//         />
-//         <textarea
-//           name="Cover Letter"
-//           placeholder="Enter Your Cover Letter"
-//           required
-//           className="border-2 w-full h-[186px] p-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-//         />
-//         <button onClick={handleClickNotification}className="w-full h-[58px] bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-//           Apply Now
-//         </button>
-//         <motion.div className="h-[4vw] w-[20vw] absolute bottom-0 right-0  " style={{display:displayNotification}}>
-//           <div>Hello</div>
-//         </motion.div>
-
-
-
-
-//       </form>
-//     </div>
-//   </div>
-// </div>
