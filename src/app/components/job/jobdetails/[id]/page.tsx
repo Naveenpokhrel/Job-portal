@@ -4,7 +4,6 @@ import React from "react";
 import { getServerSession } from "next-auth";
 import { authOPtions } from "../../../../../../auth";
 import ApplyButton from "@/app/components/Helper/applybutton";
-import Link from "next/link";
 
 const JobDetails = async ({ params }: { params: { id: string } }) => {
   const singleJob = JobData.find((job) => job.id.toString() == params.id);

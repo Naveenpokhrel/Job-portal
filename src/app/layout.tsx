@@ -1,7 +1,7 @@
 "use client";
 import { SessionProvider } from "next-auth/react";
 import { Plus_Jakarta_Sans } from "next/font/google";
-import Nav from "./components/Home/Nav";
+import Nav from "./Home/Nav";
 import { metadata } from "./metadata"; // Import metadata
 import { usePathname } from "next/navigation";
 
@@ -17,20 +17,17 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-    const pathname = usePathname()
-  
+  const pathname = usePathname();
+
   return (
-    <html lang="en"  className="scroll-smooth">
+    <html lang="en" className="scroll-smooth">
       <head>
         <meta name="description" content={metadata.description} />
         <title>{metadata.title}</title>
       </head>
       <body className={font.className}>
         <SessionProvider>
-          {pathname?.startsWith("/dashboard" ) ? (" "):(
-
-            <Nav />
-          )}
+          {pathname?.startsWith("/dashboard") ? " " : <Nav />}
           {children}
         </SessionProvider>
       </body>

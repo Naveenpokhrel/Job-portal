@@ -6,7 +6,12 @@ import useInitialName from "@/app/Hooks/initialName";
 import { useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
 
-const NavItems = ["Home", "About", "Contact", "Jobs"];
+const NavItems = [
+  { name: "Home", path: "/" },
+  { name: "About", path: "/about" },
+  { name: "Contact", path: "/Contact" },
+  { name: "Jobs", path: "/jobs" },
+];
 
 const Nav = () => {
   const { initialName } = useInitialName();
@@ -15,11 +20,15 @@ const Nav = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const router = useRouter();
 
-  function handleLogoutButton() {
+  const handleLogoutButton = () => {
     setIsDropdownOpen(false);
     router.push("/");
     location.reload();
-  }
+  };
+
+  const handleMobileNavClick = () => {
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <div className="sticky top-0 z-50 bg-white shadow-md">
@@ -38,7 +47,7 @@ const Nav = () => {
           </Link>
         </div>
 
-        {/* Mobile Menu Toggle */}
+        {/* Mobile Toggle */}
         <button
           className="md:hidden"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -46,27 +55,30 @@ const Nav = () => {
           {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
 
-        {/* Navigation Links & User Auth Section */}
+        {/* Navigation & Auth */}
         <div
-          className={`flex-1 md:flex justify-end items-center space-x-8 ${
-            isMobileMenuOpen ? "block" : "hidden md:flex"
-          }`}
+          className={`${
+            isMobileMenuOpen
+              ? "absolute top-[13vh] left-0 w-full bg-white py-6 flex flex-col items-center space-y-4 shadow-md"
+              : "hidden"
+          } md:flex md:static md:flex-row md:items-center md:space-x-8 transition-all duration-300`}
         >
-          <ul className="flex flex-col md:flex-row md:space-x-6 text-center md:text-left">
+          <ul className="flex flex-col md:flex-row items-center md:space-x-6 text-center w-full md:w-auto">
             {NavItems.map((item) => (
-              <li key={item}>
+              <li key={item.name} className="w-full md:w-auto">
                 <Link
-                  href={`/${item.toLowerCase()}`}
-                  className="text-lg font-semibold text-gray-800 hover:text-blue-600 transition-all duration-300"
+                  href={item.path}
+                  onClick={handleMobileNavClick}
+                  className="block w-full px-4 py-2 text-lg font-semibold text-gray-800 hover:text-blue-600 transition-all duration-300"
                 >
-                  {item}
+                  {item.name}
                 </Link>
               </li>
             ))}
           </ul>
 
-          {/* Authentication Section */}
-          <div className="relative">
+          {/* Auth */}
+          <div className="relative pt-4 md:pt-0">
             {LoggedIn ? (
               <div className="relative">
                 <div
@@ -77,6 +89,7 @@ const Nav = () => {
                     {initialName}
                   </span>
                 </div>
+
                 {isDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg overflow-hidden z-50">
                     <ul className="text-gray-800">
@@ -98,7 +111,10 @@ const Nav = () => {
               </div>
             ) : (
               <Link href="/signup">
-                <button className="px-4 py-2 bg-blue-600 font-semibold text-white rounded-lg hover:bg-blue-800 transition-all duration-300">
+                <button
+                  onClick={handleMobileNavClick}
+                  className="w-full md:w-auto px-4 py-2 bg-blue-600 font-semibold text-white rounded-lg hover:bg-blue-800 transition-all duration-300"
+                >
                   Login
                 </button>
               </Link>

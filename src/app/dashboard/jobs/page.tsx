@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Trash, Edit } from "lucide-react";
+import Image from "next/image";
 
 export default function AdminJobsPanel() {
   const [jobs, setJobs] = useState([
@@ -37,7 +38,7 @@ export default function AdminJobsPanel() {
     setNewJob({ title: "", company: "", type: "", location: "", image: "" });
   };
 
-  const handleDeleteJob = (id) => {
+  const handleDeleteJob = (id: number) => {
     setJobs(jobs.filter((job) => job.id !== id));
   };
 
@@ -52,7 +53,11 @@ export default function AdminJobsPanel() {
           <input type="text" placeholder="Company" className="p-2 border rounded" value={newJob.company} onChange={(e) => setNewJob({ ...newJob, company: e.target.value })} />
           <input type="text" placeholder="Job Type" className="p-2 border rounded" value={newJob.type} onChange={(e) => setNewJob({ ...newJob, type: e.target.value })} />
           <input type="text" placeholder="Location" className="p-2 border rounded" value={newJob.location} onChange={(e) => setNewJob({ ...newJob, location: e.target.value })} />
-          <input type="file" accept="image/*" className="p-2 border rounded" onChange={(e) => setNewJob({ ...newJob, image: URL.createObjectURL(e.target.files[0]) })} />
+          <input type="file" accept="image/*" className="p-2 border rounded" onChange={(e) => {
+            if (e.target.files && e.target.files[0]) {
+              setNewJob({ ...newJob, image: URL.createObjectURL(e.target.files[0]) });
+            }
+          }} />
         </div>
         <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded" onClick={handleAddJob}>Add Job</button>
       </div>
@@ -76,8 +81,12 @@ export default function AdminJobsPanel() {
                 <td className="border p-2">{job.title}</td>
                 <td className="border p-2">{job.company}</td>
                 <td className="border p-2">{job.type}</td>
-                <td className="border p-2">{job.location}</td>
-                <td className="border p-2"><img src={job.image} alt={job.title} className="w-16 h-16 object-cover rounded" /></td>
+                <td className="border p-2">
+                  <Image src={job.image} alt={job.title} width={64} height={64} className="object-cover rounded" />
+                </td>
+                <td className="border p-2">
+                  <Image src={job.image} alt={job.title} width={64} height={64} className="object-cover rounded" />
+                </td>
                 <td className="border p-2 flex justify-center gap-4">
                   <button className="text-red-500" onClick={() => handleDeleteJob(job.id)}><Trash size={20} /></button>
                   <button className="text-blue-500"><Edit size={20} /></button>

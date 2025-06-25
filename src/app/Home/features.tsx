@@ -1,8 +1,8 @@
 import React from "react";
-import Heading from "../Helper/Heading";
+import Heading from "../components/Helper/Heading";
 import Link from "next/link";
-import JobData from "../../../../data";
-import JobCard from "../Helper/JobCard";
+import JobData from "../../../data";
+import JobCard from "../components/Helper/JobCard";
 import Image from "next/image";
 
 const FeaturedJobs = () => {

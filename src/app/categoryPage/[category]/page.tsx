@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import { CiLocationOn, CiClock1 } from "react-icons/ci";
 import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
-import Footer from "@/app/components/Home/footer";
+import Footer from "@/app/Home/footer";
 
 const detailsForPage = [
   {

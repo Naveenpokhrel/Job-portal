@@ -7,7 +7,9 @@ export default function ContactForm() {
           <div className="flex flex-col justify-center items-center gap-6">
             <div className="flex flex-col justify-center items-center gap-4">
               <h1 className="text-2xl font-semibold">Contact Us</h1>
-              <p className="text-sm text-gray-500">We'd love to hear from you!</p>
+              <p className="text-sm text-gray-500">
+                We'd love to hear from you!
+              </p>
             </div>
             <div className="flex flex-col gap-3 w-full">
               <label className="font-medium">Full Name</label>

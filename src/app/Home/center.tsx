@@ -1,9 +1,7 @@
-import Heading from "../Helper/Heading";
+import Heading from "../components/Helper/Heading";
 import Image from "next/image";
 
-
 export default function Center() {
-
   return (
     <div className="flex flex-col md:flex-row justify-center items-center gap-[20px] p-20 h-[140vh]">
       <div className="flex flex-col max-w-[700px] w-full text-center md:text-left leading-relaxed">
@@ -11,7 +9,10 @@ export default function Center() {
           mainHeading="7,000+ Browse Jobs"
           subHeading="Search all the open positions on the web. Get your own personalized salary estimate. Read reviews on over 600,000 companies worldwide. The right job is out there."
         />
-        <button onClick={()=>window.scroll(0,0)} className="mt-4 bg-[#00BCD4] text-white h-[60px] w-[140px] ml-[220px] rounded-lg  transition-all">
+        <button
+          onClick={() => window.scroll(0, 0)}
+          className="mt-4 bg-[#00BCD4] text-white h-[60px] w-[140px] ml-[220px] rounded-lg  transition-all"
+        >
           Search for Job
         </button>
       </div>
@@ -28,5 +29,3 @@ export default function Center() {
     </div>
   );
 }
-
-

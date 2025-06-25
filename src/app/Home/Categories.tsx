@@ -1,9 +1,8 @@
 "use client";
 import React from "react";
-import Heading from "../Helper/Heading";
+import Heading from "../components/Helper/Heading";
 import Image from "next/image";
 import Link from "next/link";
-import Center from "./center";
 const categories = [
   {
     id: 1,
@@ -77,7 +76,14 @@ const categories = [
   },
 ];
 
-const CategoryCard = ({ img, head, price, src }) => {
+type CategoryCardProps = {
+  img: string;
+  head: string;
+  price: string;
+  src: string;
+};
+
+const CategoryCard = ({ img, head, price, src }: CategoryCardProps) => {
   return (
     <div className="flex flex-col items-center justify-center gap-3 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-500 hover:scale-105">
       <Image
