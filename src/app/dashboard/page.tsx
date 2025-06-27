@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Home, Briefcase, Users, Settings } from "lucide-react";
 import Settingss from "./settings/page";
-import AdminJobsPanel from "./jobs/page";
+import AdminJobsPanel from "../components/jobs/page";
 import Userss from "./users/page";
 import Dash from "./dash/page";
 
@@ -12,7 +12,7 @@ export default function AdminPanel() {
   const renderContent = () => {
     switch (activeTab) {
       case "dashboard":
-        return <Dash/>
+        return <Dash />;
       case "jobs":
         return <AdminJobsPanel />;
       case "users":

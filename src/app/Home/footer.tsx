@@ -1,62 +1,81 @@
 import Link from "next/link";
 import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
+
 const Footer = () => {
   return (
-    <footer className="bg-black text-gray-400 py-8 text-center">
-      <h1 className="text-2xl font-semibold text-white">Jobify.com</h1>
-
-      {/* Navigation Links */}
-      <ul className="flex justify-center space-x-6 my-4 text-sm uppercase">
-        <li>
-          <Link href="/" className="hover:text-green-400 transition-all">
-            Home
-          </Link>
-        </li>
-        <li>
-          <Link href="/agent" className="hover:text-green-400 transition-all">
-            Agent
-          </Link>
-        </li>
-        <li>
-          <Link href="/about" className="hover:text-green-400 transition-all">
-            About
-          </Link>
-        </li>
-        <li>
-          <Link href="/listing" className="hover:text-green-400 transition-all">
-            Listing
-          </Link>
-        </li>
-        <li>
-          <Link href="/blog" className="hover:text-green-400 transition-all">
-            Blog
-          </Link>
-        </li>
-        <li>
-          <Link href="/contact" className="hover:text-green-400 transition-all">
-            Contact
-          </Link>
-        </li>
-      </ul>
-
-      {/* Social Media Icons */}
-      <div className="flex justify-center space-x-4 my-4 text-green-400 text-lg">
-        <FaTwitter className="cursor-pointer hover:text-green-300 transition-all" />
-        <FaFacebookF className="cursor-pointer hover:text-green-300 transition-all" />
-        <FaInstagram className="cursor-pointer hover:text-green-300 transition-all" />
-      </div>
-
-      {/* Copyright Section */}
-      <p className="text-sm mt-4">
-        Copyright ©2021 All rights reserved | This template is made with{" "}
-        <span className="text-green-400">❤</span> by{" "}
-        <Link
-          href="https://jobify.com"
-          className="text-green-400 hover:underline"
-        >
+    <footer className="bg-black text-gray-400 px-6 py-10">
+      <div className="max-w-6xl mx-auto flex flex-col items-center text-center space-y-8">
+        {/* Logo */}
+        <h1 className="text-3xl font-bold text-white tracking-wide">
           Jobify.com
-        </Link>
-      </p>
+        </h1>
+
+        {/* Navigation Links */}
+        <ul className="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm uppercase font-medium">
+          {[
+            { name: "Home", path: "/" },
+
+            { name: "About", path: "/About" },
+
+            { name: "Blog", path: "/blog" },
+            { name: "Contact", path: "/Contact" },
+          ].map(({ name, path }) => (
+            <li key={name}>
+              <Link
+                href={path}
+                className="hover:text-green-400 transition-colors duration-200"
+              >
+                {name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        {/* Social Media Icons */}
+        <div className="flex space-x-5 text-green-400 text-xl">
+          <a
+            href="https://twitter.com"
+            aria-label="Twitter"
+            className="hover:text-green-300 transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaTwitter />
+          </a>
+          <a
+            href="https://facebook.com"
+            aria-label="Facebook"
+            className="hover:text-green-300 transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaFacebookF />
+          </a>
+          <a
+            href="https://instagram.com"
+            aria-label="Instagram"
+            className="hover:text-green-300 transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaInstagram />
+          </a>
+        </div>
+
+        {/* Copyright */}
+        <p className="text-xs sm:text-sm text-gray-500">
+          &copy; {new Date().getFullYear()} All rights reserved | Made with{" "}
+          <span className="text-green-400">❤</span> by{" "}
+          <Link
+            href="/"
+            className="text-green-400 hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Jobify.com
+          </Link>
+        </p>
+      </div>
     </footer>
   );
 };

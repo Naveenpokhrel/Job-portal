@@ -1,36 +1,67 @@
-import React from "react";
+"use client";
 
+import React, { useRef, useState } from "react";
 import Image from "next/image";
+import JobData from "../../../data";
 
 const Hero = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const jobRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const index = JobData.findIndex((job) =>
+      job.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    if (index !== -1 && jobRefs.current[index]) {
+      jobRefs.current[index]?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      alert("Job not found!");
+    }
+  };
+
   return (
-    <div className="pt-[5rem] pb-[3rem] h-[100vh]">
-      <div className="w-[100%] h-[60vh] flex flex-col items-center justify-center">
-        <div className="w-[80%] mx-auto grid grid-cols-1 lg:grid-cols-2 items-center gap-[2rem]">
-          {/* content */}
+    <section className="pt-20 pb-12 min-h-screen flex items-center">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div>
-            <h1 className="text-[28px] sm:text-[35px] lg:text-[45px] xl:text-[60px] text-[#05264e] leading-[3rem] lg:leading-[4rem] font-extrabold">
+            <h1 className="text-4xl lg:text-5xl font-extrabold text-[#05264e] leading-tight">
               The <span className="text-blue-500">Easiest Way</span> <br /> To
               Get Your New Job
             </h1>
-            <div className="relative mt-4">
+
+            <form onSubmit={handleSubmit} className="relative mt-8 max-w-md">
               <input
                 type="text"
                 placeholder="Search for job"
-                className=" relative w-full h-[60px] mt-4  rounded-lg border-2 border-gray-300 focus:outline-none focus:border-blue-500 text:ml-[50px] pl-4"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full h-14 rounded-lg border-2 border-gray-300 px-4 pr-32 focus:outline-none focus:border-blue-500"
               />
-              <button className="right-0 absolute w-[120px]  h-[60px] mt-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-all duration-300">
+              <button
+                type="submit"
+                className="absolute right-1 top-1 bottom-1 w-28 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition"
+              >
                 Search
               </button>
-            </div>
+            </form>
           </div>
-          {/* image */}
+
           <div className="hidden lg:block">
-            <Image src="/Image/hero.svg" alt="image" width={700} height={400} />
+            <Image
+              src="/Image/hero.svg"
+              alt="Job search illustration"
+              width={700}
+              height={400}
+              className="object-contain"
+              priority
+            />
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
