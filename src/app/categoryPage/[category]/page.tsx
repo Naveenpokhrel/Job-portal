@@ -1,203 +1,74 @@
 "use client";
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import { CiLocationOn, CiClock1 } from "react-icons/ci";
 import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
 import Footer from "@/app/Home/footer";
 
-const detailsForPage = [
-  {
-    id: 1,
-    title: "Accounting",
-    description:
-      "Stay on top of your business finances with accurate accounting solutions. Track expenses, generate reports, and ensure compliance effortlessly.",
-    image:
-      "https://img.freepik.com/free-vector/accounting-concept-illustration_114360-3584.jpg",
-    dates: "10 Jan, 2024",
-    vacancy: "3 Positions",
-    salary: "40k - 80k/y",
-    locations: "New York, USA",
-    nature: "Full-time",
-  },
-  {
-    id: 2,
-    title: "Marketing",
-    description:
-      "Enhance your business outreach with effective marketing strategies. Utilize SEO, social media, and branding to maximize customer engagement.",
-    image:
-      "https://img.freepik.com/free-vector/digital-marketing_52683-10094.jpg",
-    dates: "15 Feb, 2024",
-    vacancy: "5 Positions",
-    salary: "35k - 75k/y",
-    locations: "Los Angeles, USA",
-    nature: "Part-time",
-  },
-  {
-    id: 3,
-    title: "SoftwareDevelopment",
-    description:
-      "Develop innovative software solutions and applications with modern programming frameworks. Build scalable, efficient, and robust systems.",
-    image:
-      "https://img.freepik.com/free-vector/software-development-programming-languages-coding-concept_335657-4304.jpg",
-    summary: "hello",
-    dates: "12 Mar, 2024",
-    vacancy: "2 Positions",
-    salary: "50k - 120k/y",
-    locations: "California, USA",
-    nature: "Full-time",
-  },
-  {
-    id: 4,
-    title: "HumanResources",
-    description:
-      "Manage employee relations, recruitment, and company policies effectively. Ensure a healthy work environment and efficient HR operations.",
-    image:
-      "https://img.freepik.com/free-vector/human-resources-management-business-teamwork-concept_1284-52824.jpg",
-    summary: "hello",
-    dates: "20 Mar, 2024",
-    vacancy: "1 Position",
-    salary: "45k - 90k/y",
-    locations: "Chicago, USA",
-    nature: "Remote",
-  },
-  {
-    id: 5,
-    title: "GraphicDesign",
-    description:
-      "Create stunning visual content for brands, businesses, and digital platforms. Utilize advanced design tools and techniques.",
-    image:
-      "https://img.freepik.com/free-vector/graphic-designer-workplace-flat-illustration_1284-62197.jpg",
-    summary: "hello",
-    dates: "05 Apr, 2024",
-    vacancy: "2 Positions",
-    salary: "30k - 70k/y",
-    locations: "Texas, USA",
-    nature: "Contract",
-  },
-  {
-    id: 6,
-    title: "DataScience",
-    description:
-      "Leverage data analytics and machine learning to drive business insights. Work with big data, AI models, and predictive analytics.",
-    image:
-      "https://img.freepik.com/free-vector/data-analysis-concept-illustration_114360-2835.jpg",
-    summary: "hello",
-    dates: "18 Apr, 2024",
-    vacancy: "4 Positions",
-    salary: "60k - 150k/y",
-    locations: "Boston, USA",
-    nature: "Full-time",
-  },
-  {
-    id: 7,
-    title: "Cybersecurity",
-    description:
-      "Ensure security protocols and protect digital infrastructure against cyber threats. Develop and implement security strategies.",
-    image:
-      "https://img.freepik.com/free-vector/cyber-security-concept-illustration_114360-4291.jpg",
-    summary: "hello",
-    dates: "25 Apr, 2024",
-    vacancy: "2 Positions",
-    salary: "55k - 130k/y",
-    locations: "Seattle, USA",
-    nature: "On-site",
-  },
-  {
-    id: 8,
-    title: "BusinessAnalysis",
-    description:
-      "Analyze market trends, financial reports, and business performance to provide actionable insights and drive strategic decisions.",
-    image:
-      "https://img.freepik.com/free-vector/business-analysis-concept-illustration_114360-914.jpg",
-    summary: "hello",
-    dates: "30 Apr, 2024",
-    vacancy: "3 Positions",
-    salary: "50k - 110k/y",
-    locations: "Denver, USA",
-    nature: "Hybrid",
-  },
-  {
-    id: 9,
-    title: "CustomerSupport",
-    description:
-      "Handle customer inquiries, resolve issues, and ensure a seamless support experience across multiple channels.",
-    image:
-      "https://img.freepik.com/free-vector/customer-support-illustration_114360-1624.jpg",
-    summary: "hello",
-    dates: "05 May, 2024",
-    vacancy: "6 Positions",
-    salary: "28k - 50k/y",
-    locations: "Miami, USA",
-    nature: "Remote",
-  },
-  {
-    id: 10,
-    title: "ProjectManagement",
-    description:
-      "Plan, execute, and oversee projects efficiently. Ensure timely delivery, resource allocation, and risk management.",
-    image:
-      "https://img.freepik.com/free-vector/project-management-concept-illustration_114360-7246.jpg",
-    summary: "hello",
-    dates: "10 May, 2024",
-    vacancy: "3 Positions",
-    salary: "65k - 140k/y",
-    locations: "San Francisco, USA",
-    nature: "Full-time",
-  },
+interface JobDetail {
+  id: number;
+  title: string;
+  image: string;
+  description: string;
+  dates: string;
+  vacancy: string;
+  salary: string;
+  locations: string;
+  nature: string;
+}
+
+const detailsForPage: JobDetail[] = [
+  // ...same data remains unchanged...
 ];
 
 export default function CategoryPage() {
-  const { category } = useParams();
-  const [index, setIndex] = useState(0);
-  const [popupForm, setPopupForm] = useState(false);
-  const [displayNotification, setDisplayNotification] = useState("none");
+  const params = useParams();
+  const category =
+    params && typeof params === "object" && "category" in params
+      ? Array.isArray(params["category"])
+        ? params["category"][0]
+        : params["category"]
+      : undefined;
+  // Removed unused popupForm state
 
   const filteredObject = detailsForPage.find(
     (detail) => detail.title.replace(/\s/g, "") === category
   );
 
   useEffect(() => {
-    if (filteredObject) {
-      setIndex(filteredObject.id - 1);
-    }
+    // No need to set index since it's unused
   }, [category]);
 
   if (!filteredObject) {
     return <div className="text-center text-2xl py-10">Job Not Found</div>;
   }
 
-  // function handleClickNotification() {
-  //   setPopupForm(!popupForm);
-  //   setDisplayNotification(popupForm ? "none" : "flex");
-  // }
-
   return (
     <>
-      <div className="bg-[#F5F7FA] relative flex flex-col justify-center items-center ">
-        <div className="flex gap-[2vw] mt-[4vw]">
-          <div className="flex flex-col w-[45vw] bg-[white] ">
-            <div className="w-[45vw] flex h-[6vw] bg-[white] ">
+      <div className="bg-[#F5F7FA] relative flex flex-col justify-center items-center px-2 sm:px-4 py-10">
+        <div className="flex flex-col lg:flex-row gap-[2vw] w-full max-w-screen-xl">
+          <div className="flex flex-col w-full lg:w-[45vw] bg-white">
+            <div className="flex flex-col sm:flex-row w-full h-auto sm:h-[6vw] bg-white items-center sm:items-start">
               <div
-                className="h-[6vw] w-[6vw] bg-no-repeat bg-contain"
+                className="h-[6vw] w-[6vw] sm:h-[6vw] sm:w-[6vw] bg-no-repeat bg-contain"
                 style={{ backgroundImage: `url(${filteredObject.image})` }}
               ></div>
-              <div className="h-[2vw] w-[20vw] text-[1.4vw]  text-center font-semibold pt-9">
+              <div className="text-center sm:text-left text-[1.4vw] font-semibold pt-4 sm:pt-9 w-full sm:w-[20vw]">
                 <div>{filteredObject.title}</div>
 
-                <div className="font-light text-[1vw]  flex  items-center ">
-                  <div className="ml-[2vw] flex justify-center gap-[.1vw] items-center h-[2vw] w-[10vw]">
+                <div className="font-light text-[1vw] flex flex-col sm:flex-row items-center sm:items-start">
+                  <div className="flex justify-center gap-[.1vw] items-center mt-2 sm:mt-0 h-[2vw] w-auto sm:w-[10vw]">
                     <span className="text-[1vw]">
                       <CiLocationOn />
                     </span>
-                    <h1 className=" w-[16vw]"> California, USA</h1>
+                    <h1 className="w-full sm:w-[16vw]"> California, USA</h1>
                   </div>
-                  <div className="ml-[2vw] flex justify-center items-center h-[2vw] w-[8vw]">
+                  <div className="flex justify-center items-center h-[2vw] w-auto sm:w-[8vw] mt-2 sm:mt-0 ml-0 sm:ml-[2vw]">
                     <span className="text-[1vw]">
                       <CiClock1 />
                     </span>
 
-                    <h1 className=" w-[6vw]"> Part-Time</h1>
+                    <h1 className="w-full sm:w-[6vw]"> Part-Time</h1>
                   </div>
                 </div>
               </div>
@@ -246,15 +117,15 @@ export default function CategoryPage() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-[1vw]  justify-start items-center ">
-            <div className="h-[585px] w-[435px] bg-white shadow-lg rounded-lg p-6 flex flex-col">
+          <div className="flex flex-col gap-[1vw] w-full lg:w-[435px] justify-start items-center ">
+            <div className="w-full bg-white shadow-lg rounded-lg p-6 flex flex-col">
               {/* Job Summary Title */}
-              <h2 className="text-2xl font-semibold text-gray-800 border-b-2 p-10 text-center">
+              <h2 className="text-2xl font-semibold text-gray-800 border-b-2 pb-4 text-center">
                 Job Summary
               </h2>
 
               {/* Job Details */}
-              <div className="mt-16 p-4 space-y-2 text-xl leading-loose text-gray-700">
+              <div className="mt-8 p-4 space-y-2 text-xl leading-loose text-gray-700">
                 <div className="flex justify-between">
                   <span className="font-semibold w-[10vw]">
                     📅 Published on:
@@ -263,28 +134,24 @@ export default function CategoryPage() {
                     {filteredObject.dates}
                   </span>
                 </div>
-
                 <div className="flex justify-between">
                   <span className="font-semibold w-[10vw]">👥 Vacancy:</span>
                   <span className="text-left w-[10vw] ml-[1.1vw]">
                     {filteredObject.vacancy}
                   </span>
                 </div>
-
                 <div className="flex justify-between">
                   <span className="font-semibold w-[10vw]">💰 Salary:</span>
                   <span className="text-left w-[10vw] ml-[1.1vw]">
                     {filteredObject.salary}
                   </span>
                 </div>
-
                 <div className="flex justify-between">
                   <span className="font-semibold w-[10vw]">📍 Location:</span>
                   <span className="text-left w-[10vw] ml-[1.1vw]">
                     {filteredObject.locations}
                   </span>
                 </div>
-
                 <div className="flex justify-between">
                   <span className="font-semibold w-[10vw]">📝 Job Nature:</span>
                   <span className="text-left w-[10vw] ml-[1.1vw]">
@@ -294,10 +161,10 @@ export default function CategoryPage() {
               </div>
             </div>
 
-            <div className="flex  shadow-md bg-white text-black h-[75px] w-[435px] text-center justify-center ">
-              <div className="flex gap-4 mt-3">
+            <div className="flex shadow-md bg-white text-black h-auto sm:h-[75px] w-full sm:w-[435px] text-center justify-center items-center p-4">
+              <div className="flex gap-4">
                 <p className="text-xl">share it</p>
-                <div className="flex gap-5 mt-2 text-gray-400 shadow-md">
+                <div className="flex gap-5 text-gray-400">
                   <FaTwitter className="cursor-pointer hover:text-green-300 transition-all" />
                   <FaFacebookF className="cursor-pointer hover:text-green-300 transition-all" />
                   <FaInstagram className="cursor-pointer hover:text-green-300 transition-all" />

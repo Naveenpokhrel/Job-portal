@@ -3,6 +3,7 @@ import React from "react";
 import Heading from "../components/Helper/Heading";
 import Image from "next/image";
 import Link from "next/link";
+
 const categories = [
   {
     id: 1,
@@ -93,12 +94,11 @@ const CategoryCard = ({ img, head, price, src }: CategoryCardProps) => {
         height={80}
         className="object-contain"
       />
-
       <h1 className="text-lg font-semibold text-gray-800">{head}</h1>
       <h1 className="text-sm text-gray-600">{price}</h1>
       <Link
         href={src}
-        className="border-2 h-[50px] w-[150px] text-white items-center justify-center p-5 flex bg-blue-600"
+        className="border-2 h-[45px] w-full sm:w-[150px] text-white items-center justify-center px-4 flex bg-blue-600"
       >
         More details
       </Link>
@@ -113,8 +113,8 @@ const Categories = () => {
         mainHeading="Popular Job Categories"
         subHeading="2022 Jobs Live - 293 added today."
       />
-      <div className="w-[90%] md:w-[80%] mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-10">
+      <div className="w-full sm:w-[90%] md:w-[80%] mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 mt-10">
           {categories.map((category) => (
             <CategoryCard key={category.id} {...category} />
           ))}

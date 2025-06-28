@@ -38,7 +38,7 @@ export default function SignupPage() {
       await signIn("credentials", { email, password, redirect: false });
       router.push("/");
 
-    } catch (err) {
+    } catch {
       setError("Something went wrong");
     }
   };

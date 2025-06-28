@@ -24,7 +24,7 @@ const AboutHighlight = () => {
 
           <p className="text-gray-700 text-lg leading-relaxed font-medium">
             Our platform is trusted by professionals across industries — from
-            software engineers to marketers, designers to data analysts. We've
+            software engineers to marketers, designers to data analysts. We&#39;ve
             created a recruitment ecosystem that helps job seekers land
             meaningful roles while giving companies access to pre-qualified and
             passionate talent.
@@ -40,9 +40,9 @@ const AboutHighlight = () => {
           </p>
 
           <p className="text-gray-600 text-base leading-relaxed">
-            Since our inception, we've helped thousands of people step into
-            better jobs and companies find better hires. Whether you're starting
-            your career or scaling your team — we're here to accelerate your
+            Since our inception, we&#39;ve helped thousands of people step into
+            better jobs and companies find better hires. Whether you&#39;re starting
+            your career or scaling your team — we&#39;re here to accelerate your
             journey.
           </p>
 

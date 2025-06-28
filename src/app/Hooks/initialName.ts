@@ -1,35 +1,22 @@
 import { create } from "zustand";
 
-
-import { persist,devtools } from "zustand/middleware";
-
-
-
+import { persist, devtools } from "zustand/middleware";
 
 interface initialNam {
-
-    initialName:string,
-    newInitialName: (a:string)=>void,
-    
+  initialName: string;
+  newInitialName: (a: string) => void;
 }
 
-
 const useInitialName = create<initialNam>()(
-
-    devtools(
-
-        persist(
-            (Set)=>({
-
-                initialName:"",
-                newInitialName: (a)=>Set((c)=>({initialName:a})),
-            }),{name:"LogIn"}
-
-
-
-
-        )
+  devtools(
+    persist(
+      (Set) => ({
+        initialName: "",
+        newInitialName: (a) => Set(() => ({ initialName: a })),
+      }),
+      { name: "LogIn" }
     )
-)
+  )
+);
 
-export default useInitialName
+export default useInitialName;
